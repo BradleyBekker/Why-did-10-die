@@ -1,0 +1,8 @@
+3x pickup
+2x rocket touch
+
+theme
+theme faster drums
+theme faster drums(hats), more bass, brass
+
+ambience
