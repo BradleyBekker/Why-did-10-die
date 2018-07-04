@@ -10,6 +10,8 @@ public class P2rocket : MonoBehaviour
     [SerializeField] public GameObject Player2;
     [SerializeField] public GameObject playercam;
     [SerializeField] public GameObject Rocket1;
+    [SerializeField]public ParticleSystem particleSystem1;
+    [SerializeField]public ParticleSystem particleSystem2;
 
     private float flightIncrease = .003f;
     private float flightXRange = 3f;
@@ -27,14 +29,17 @@ public class P2rocket : MonoBehaviour
     public Vector2 position;
     public Vector2 defaultPosition;
 
-    private void Start() {
 
+    private void Start() {
         defaultPosition = transform.position;
+        particleSystem1.GetComponent<ParticleSystem>().enableEmission = false;
+        particleSystem2.GetComponent<ParticleSystem>().enableEmission = false;
     }
 
     private void FixedUpdate() {
         position = transform.position;
         if(animationPlaying) playAnimation();
+        if(transform.position.y > 56) playerWin();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -50,6 +55,7 @@ public class P2rocket : MonoBehaviour
             playerWon = true;
 
             Player2.GetComponent<P2movement>().allowMovement = false;
+            particleSystem1.GetComponent<ParticleSystem>().enableEmission = true;
         }
     }
 
@@ -68,6 +74,9 @@ public class P2rocket : MonoBehaviour
         }
         else flightIncrease = 0.275f;
         
+        if(flightIncrease > 0.005) {
+            particleSystem2.GetComponent<ParticleSystem>().enableEmission = true;
+        }
         return flightIncrease;
     }
 
